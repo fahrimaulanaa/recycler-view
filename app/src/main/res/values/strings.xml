@@ -8,5 +8,7 @@
     <string name="description">deskripsi</string>
     <string name="favorite">Favorite</string>
     <string name="share">Share</string>
+    <string name="set_favorite">Favorite</string>
+    <string name="set_share">Share Pahlawan</string>
 
 </resources>

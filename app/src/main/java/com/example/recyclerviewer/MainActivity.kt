@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() {
 
     private var rvHeroes: RecyclerView? = null
     private var list: ArrayList<Hero>? = null
@@ -52,6 +53,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun showSelectedHero(hero: Hero) {
+        Toast.makeText(this, "Kamu memilih " + hero.name, Toast.LENGTH_SHORT).show()
+    }
+
     private fun showRecyclerCardView() {
         rvHeroes?.layoutManager = LinearLayoutManager(this)
         val cardViewHeroAdapter = CardViewHeroAdapter(list!!)
@@ -62,12 +67,24 @@ class MainActivity : AppCompatActivity() {
         rvHeroes?.layoutManager = GridLayoutManager(this, 2)
         val gridHeroAdapter = GridHeroAdapter(list!!)
         rvHeroes?.adapter = gridHeroAdapter
+
+        gridHeroAdapter.setOnItemClickCallback(object : GridHeroAdapter.OnItemClickCallback() {
+            override fun onItemClicked(data: Hero) {
+                showSelectedHero(data)
+            }
+        })
     }
 
     private fun showRecyclerList() {
         rvHeroes?.layoutManager = LinearLayoutManager(this)
         val listHeroAdapter = ListHeroAdapter(list!!)
         rvHeroes?.adapter = listHeroAdapter
+
+        listHeroAdapter.setOnItemClickCallback(object : ListHeroAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Hero) {
+                showSelectedHero(data)
+            }
+        })
     }
 
 }
@@ -76,7 +93,7 @@ class CardViewHeroAdapter(list: ArrayList<Hero>) : RecyclerView.Adapter<Recycler
     private var listHero = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_cardview_hero, parent, false)
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_cardview_gero, parent, false)
         return CardViewViewHolder(view)
     }
 
@@ -103,6 +120,11 @@ class CardViewHeroAdapter(list: ArrayList<Hero>) : RecyclerView.Adapter<Recycler
         }
     }
 
+    open class OnItemClickCallback {
+        fun onItemClicked(data: Hero) {
+        }
+    }
+
 }
 
 class GridHeroAdapter(list: ArrayList<Hero>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -121,14 +143,13 @@ class GridHeroAdapter(list: ArrayList<Hero>) : RecyclerView.Adapter<RecyclerView
         return listHero.size
     }
 
+    fun setOnItemClickCallback(any: Any) {
+    }
+
     inner class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tvName: TextView = itemView.findViewById(R.id.tv_item_name)
-        var tvFrom: TextView = itemView.findViewById(R.id.tv_item_from)
         var imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
 
         fun bind(hero: Hero) {
-            tvName.text = hero.name
-            tvFrom.text = hero.from
             Glide.with(itemView.context)
                 .load(hero.photo)
                 .apply(RequestOptions().override(350, 550))
@@ -136,5 +157,9 @@ class GridHeroAdapter(list: ArrayList<Hero>) : RecyclerView.Adapter<RecyclerView
         }
     }
 
+    open class OnItemClickCallback {
+        open fun onItemClicked(data: Hero) {
 
+        }
+    }
 }

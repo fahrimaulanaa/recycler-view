@@ -2,40 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="55dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_height="55dp"
-        android:id="@+id/img_item_photo"/>
-
-    <LinearLayout
+    <ImageView
+        android:id="@+id/img_item_photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/img_item_photo"
-        android:layout_toRightOf="@+id/img_item_photo"
-        android:orientation="vertical">
+        android:layout_height="250dp"
+        android:layout_margin="1dp"
+        android:scaleType="centerCrop"
+        tools:src="@color/colorAccent" />
 
-        <TextView
-            android:id="@+id/tv_item_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="@string/heroes_name"/>
-
-        <TextView
-            android:id="@+id/tv_item_from"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            tools:text="@string/from"/>
-    </LinearLayout>
 </RelativeLayout>
